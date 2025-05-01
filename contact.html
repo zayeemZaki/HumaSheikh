@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Author Name - Contact</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div data-include="assets/partials/header.html"></div>
+
+  
+  <main>
+    <div class="container">
+      <h2>Contact Me</h2>
+      <section id="contact-info">
+        <p>You can reach me at:</p>
+        <ul>
+          <li>Email: <a href="mailto:humakashmiri@gmail.com">humakashmiri@gmail.com</a></li>
+          <li>Phone: +123-456-7890</li>
+          <li>Twitter: <a href="https://twitter.com/author" target="_blank">@author</a></li>
+        </ul>
+      </section>
+      
+      <!-- Optional simple contact form -->
+      <section id="contact-form">
+        <h3>Send a Message</h3>
+        <form method="POST" action="mailto:author@example.com">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+          
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+          
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </div>
+  </main>
+  
+  <div data-include="assets/partials/footer.html"></div>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

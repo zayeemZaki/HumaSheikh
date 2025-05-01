@@ -1,0 +1,33 @@
+backend:
+  name: git-gateway
+  branch: main  # Change if your default branch is different
+
+media_folder: "assets/images/uploads"  # Folder for uploaded images
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "work"
+    label: "Work Published"
+    folder: "content/work-published"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Short Fiction", "Non-Fiction", "Poetry"] }
+      - { label: "Publication", name: "publication", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Link", name: "link", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "presentations"
+    label: "Conference Presentations"
+    folder: "content/presentations"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Event", name: "event", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Link", name: "link", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "markdown" }
