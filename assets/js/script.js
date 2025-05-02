@@ -1,54 +1,48 @@
 // assets/js/script.js
 
-console.log("📋 script.js loaded");  // 1) confirm script is included
-
-window.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ DOMContentLoaded");
-  includeHTML()
-    .then(() => {
-      console.log("🔗 includeHTML done");
-      setupMobileMenu();
-      highlightActiveNav();
-    })
-    .catch(err => console.error("❌ includeHTML failed:", err));
+// 1) When DOM is ready, include partials, then wire up nav and highlighting
+document.addEventListener('DOMContentLoaded', async () => {
+  await includeHTML();        // inject header & footer
+  setupMobileMenu();          // mobile menu toggle
+  highlightActiveNav();       // mark the right <a> as .active
 });
 
+// 2) Fetch & inline any [data-include] fragment
 async function includeHTML() {
-  const elements = document.querySelectorAll("[data-include]");
-  console.log(`Found ${elements.length} include elements`);
-  
+  const elements = document.querySelectorAll('[data-include]');
   for (let el of elements) {
-    const file = el.getAttribute("data-include");
-    // Try BOTH absolute and relative if you like. Start with relative:
-    const path = file;                 
-    console.log(`Attempting to fetch: ${path}`);
+    const file = el.getAttribute('data-include');
     try {
-      const res = await fetch(path);
-      console.log(`→ fetch status for ${path}:`, res.status);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      el.outerHTML = text;
-      console.log(`✔ Injected ${path}`);
+      const resp = await fetch(file);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const html = await resp.text();
+      el.outerHTML = html;
     } catch (err) {
-      console.error(`Failed to include '${path}':`, err);
+      console.error(`Failed to include '${file}':`, err);
     }
   }
 }
 
+// 3) Toggle mobile nav on “☰” click
 function setupMobileMenu() {
-  const btn = document.querySelector(".mobile-menu");
-  const nav = document.querySelector("nav ul");
+  const btn = document.querySelector('.mobile-menu');
+  const nav = document.querySelector('#site-nav ul');
   if (btn && nav) {
-    btn.addEventListener("click", () => nav.classList.toggle("active"));
+    btn.addEventListener('click', () => nav.classList.toggle('active'));
   }
 }
 
+// 4) Highlight the nav link matching the current page
 function highlightActiveNav() {
-  const links = document.querySelectorAll("nav ul li a");
-  const current = location.pathname.split("/").pop() || "index.html";
-  links.forEach(a => {
-    if (a.getAttribute("href") === current) {
-      a.classList.add("active");
+  // determine current filename (e.g. 'index.html' or 'presentations.html')
+  let current = window.location.pathname.split('/').pop();
+  if (!current) current = 'index.html';
+
+  document.querySelectorAll('#site-nav a').forEach(link => {
+    if (link.getAttribute('href') === current) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
     }
   });
 }
